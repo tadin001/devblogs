@@ -1,0 +1,127 @@
+--- 
+ID: 607 
+post_title: BB3 test 1
+author: devdevblogs 
+post_excerpt: "" 
+layout: post 
+permalink: http://devdevblogs.wpengine.com/?p=607 
+published: false 
+---
+
+Sample title of the post in H1 
+ 
+Microsoft Build has always been a time when we deliver a wealth of developer-focused announcements. It’s an opportunity to share our vision for developer experiences mobile, AR/VR, , web, desktop, IoT and AI. This year, I'm excited to have brought this vision to life with more than a few exciting announcements: 
+Installer Updates  
+Performance Improvements 
+Editor Productivity Improvements 
+Debugging and Diagnostics 
+Mobile Development 
+Visual Studio IntelliCode 
+ 
+Today at Build, we announced the release of Visual Studio 2017 version 15.7 and the first preview of the next update, Visual Studio 2017 version 15.8 Preview 1. If you would rather try these without installing them, check out the Visual Studio images in Azure. 
+ 
+ Before digging in, I’d like to call out other Visual Studio and .NET news:  
+We have a generally available release of Visual Studio 2017 for Mac version 7.5, our IDE for cloud, mobile, and game development on macOS.  
+We have a release candidate for .NET Core 2.1, our cross-platform, open source .NET implementation. 
+We published the .NET Core 3 roadmap; .NET Core 3 is the next major version of .NET Core and includes support for WPF, Windows Forms, and UWP on Windows. 
+We have a generally available release of Xamarin.Forms 3.0 for productive mobile development 
+ 
+There are also two really interesting previews I’d call your attention to: 
+We have a public preview of Visual Studio Live Share, our real-time collaboration system for developers 
+We have a private preview of Visual Studio IntelliCode, our new AI-assisted development capabilities  
+Installer Updates 
+One of the first things you’ll probably notice is a nice change to the way updates work. You can now initiate check for updates (Help -> Check for Updates) and, after you save your work and choose “Update Now,” Visual Studio will automatically apply the update and reopen where you left off. 
+Starting with this release, you can reduce the installation footprint on your system drive by directing the download cache, shared components, and some SDKs and tools to separate locations. Because these pieces are shared among Visual Studio installations, you can only set the locations with your first installation, meaning that you can’t change them later. If you have a solid-state drive (SSD), we recommend that you install the Visual Studio core product on your SSD because this will make Visual Studio run significantly faster.  
+ 
+Performance Improvements 
+We’ve done a lot of work on Visual Studio performance during the Visual Studio 2017 cycle, particularly things like solution load (see this post for some of the most recent improvements), but we’re making continual improvements. Here are a few other improvements to performance in this update. 
+UI Responsiveness: One change that will improve general UI responsiveness in version 15.7 is that the debugging windows are now asynchronous. This means that they will no longer block Visual Studio as they do work. This change will allow for faster stepping because you can continue interacting with Visual Studio without interruption.  
+ 
+Sample Code 
+ 
+class Program  
+{  
+static void Main(string[] args)  
+{  
+object[] numbers =  
+{ 0b1, 0b10, new object[] { 0b100, 0b1000 }, // binary literals  
+0b1_0000, 0b10_0000 }; // digit separators  
+ 
+var (sum, count) = Tally(numbers); // deconstruction  
+WriteLine($"Sum: {sum}, Count: {count}");  
+}  
+ 
+static (int sum, int count) Tally(object[] values) // tuple types  
+{  
+var r = (s: 0, c: 0); // tuple literals  
+ 
+void Add(int s, int c) { r = (r.s + s, r.c + c); } // local functions  
+ 
+foreach (var v in values)  
+{  
+switch (v) // switch on any value  
+{  
+case int i: // type patterns  
+Add(i, 1);  
+break;  
+case object[] a when a.Length > 0: // case conditions  
+var t = Tally(a);  
+Add(t.sum, t.count);  
+break;  
+}  
+}  
+return r;  
+}  
+} 
+ 
+Editor Productivity Improvements 
+With each release, we add capabilities that improve developer productivity, particularly focusing on that “inner loop” of editing, building, and debugging.  
+.NET Refactorings and Navigation: Every release, we increase the number of refactorings and improve navigation for our managed languages. In Visual Studio 2017 version 15.7 we added the following refactorings: 
+Toggle between foreach loop and for-loop (C# and Visual Basic) 
+Make private field read only (C# and Visual Basic) 
+Convert LINQ query expression into a foreach loop (C#)  
+Convert implicit type to explicit type (C#) 
+ 
+XAML IntelliSense: The XAML editor now provides IntelliSense for authoring conditional XAML. When using a type that is not present in the target-minimum version of your app, the XAML editor now not only warns but also provides several options to fix it. The quick fix Lightbulb figures out the right conditional using statement based on the platform version where the type was first introduced, allowing the app to target a wider range of platform versions while being able to consume the latest controls. 
+ 
+ 
+C++ ClangFormat: We’ve added ClangFormat support for C++ developers in the IDE. Like with EditorConfig, you can use ClangFormat to automatically style and format your code as you type, in a way that can be enforced across your development team. For more information, see the ClangFormat Support blog post. 
+Debugging and Diagnostics 
+IntelliTrace Events and Snapshots for .NET Core: IntelliTrace’s new step-back debugging feature, which we first shipped in Visual Studio 2017 version 15.5, is now supported for debugging .NET Core applications. The feature automatically takes a snapshot of your application on each breakpoint and debugger step. This enables you to go back to a previous breakpoint or step and view the state of the application as it was in the past. To enable this feature, go to Tools > Options > IntelliTrace settings > and select ‘IntelliTrace events and snapshots’. IntelliTrace step-back is a Visual Studio Enterprise feature available on Windows 10 Anniversary Update or above for debugging .NET applications. 
+ 
+ 
+ 
+Mobile Development 
+Android Development Improvements: We have made several improvements to the Android development experience. We are now distributing the Android Oreo SDK (Android API level 27) and are shipping the Android emulators with Quick Boot enabled. We have modernized the designer’s property editor. Visual Studio will now detect scenarios where the project requires a different version of the Android SDK that is installed and will download in the background the required components.  
+Lastly, when you start a compilation, Visual Studio will boot and deploy the Xamarin runtime on your device while the compilation is taking place, thus reducing the time that that you have to wait to see your application show up. With our test application, on a fresh device, with no previous deployment, and including launching the Android emulator, we see the following performance gains: 
+
+Device Type/Mode 
+Visual Studio 15.6 
+Visual Studio 15.7 
+Emulator/Debug 
+125 secs 
+40 secs 
+Emulator/Release 
+145 secs 
+30 secs 
+Device/Debug 
+115 secs 
+95 secs 
+Device/Release 
+104 secs 
+65 secs 
+Visual Studio IntelliCode 
+
+
+ 
+IntelliCode is a set of AI-assisted capabilities that improve developer productivity with features like contextual IntelliSense, inference and enforcement for code styles, and focused reviews for your pull requests (PRs.) Check out the video to see what we demoed at BUILD 2018 - it shows you just some of the capabilities that IntelliCode will offer.  
+AI-assisted IntelliSense, and the other features shown at BUILD 2018, are just the start. Over time you’ll see more ways that we’ll assist your end-to-end developer workflow.  
+ 
+At Build, we shared a sneak peak of IntelliCode, showing how it uses AI to deliver better context-aware code completions, guide developers to code to the patterns and styles of their team, find difficult-to-catch code issues, and focus code reviews on areas that really matter. 
+Developers can sign up for news and a future private preview, as well as gain access to an experimental extension at http://aka.ms/intellicode 
+ 
+ 
+Share Your Feedback 
+As always, we want to know what you think. Please install Visual Studio 2017 version 15.7 and Visual Studio 2017 version 15.8 preview 1 and share your thoughts and concerns. 
+ 
+Please let us know any issues you have via the Report a Problem tool in Visual Studio. You can track your issues in Visual Studio Developer Community where you can ask questions and find answers. You can also engage with us and other Visual Studio developers through our new Gitter community (requires GitHub account), make a product suggestion through UserVoice, or get free installation help through Live Chat Support. 
